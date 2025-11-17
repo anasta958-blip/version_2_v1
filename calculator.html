@@ -22,7 +22,7 @@
 
 <body class="bg-black text-white">
 
-  <!-- НАВИГАЦИЯ -->
+
   <nav class="fixed top-0 w-full bg-gray-900 shadow-lg z-50 border-b border-purple-800">
     <div class="max-w-7xl mx-auto px-4 flex justify-between items-center h-16">
       <h1 class="text-2xl font-bold text-purple-400">Фулфилмент <span class="text-accent">"Для
@@ -34,7 +34,7 @@
     </div>
   </nav>
 
-  <!-- КАЛЬКУЛЯТОР -->
+  
   <section class="pt-24 py-20 bg-Dark_Knight" x-data="calculatorData()">
     <div class="max-w-5xl mx-auto px-4">
 
@@ -43,7 +43,7 @@
         Калькулятор юнит-экономики
       </h2>
 
-      <!-- ПРИЁМ ТОВАРА -->
+     
       <div class="mb-16 bg-gray-900 p-8 rounded-2xl shadow-xl">
         <h3 class="text-3xl font-bold mb-6 text-purple-400">Приём товара</h3>
         <template x-for="(item, index) in reception.items" :key="index">
@@ -77,7 +77,7 @@
             x-text="totalReception + ' ₽'"></span></p>
       </div>
 
-      <!-- ОБРАБОТКА ТОВАРА — ИСПРАВЛЕННАЯ ЛОГИКА 100% -->
+     
       <div class="mb-16 bg-gray-900 p-8 rounded-2xl shadow-xl">
         <h3 class="text-3xl font-bold mb-6 text-purple-400">Обработка товара</h3>
 
@@ -89,7 +89,7 @@
               <option value="">Выберите услугу</option>
               <option value="Приём и пересчёт">Приём и пересчёт – 3 ₽</option>
 
-              <!-- Три взаимоисключающие проверки на брак — правильная логика -->
+             
               <option value="Визуальная проверка на брак (без устранения дефектов)"
                 :disabled="hasOtherDefectCheck(index, 'Визуальная проверка на брак (без устранения дефектов)')">
                 Визуальная проверка на брак (без устранения дефектов) – 3 ₽
@@ -134,14 +134,14 @@
             x-text="totalProcessing + ' ₽'"></span></p>
       </div>
 
-      <!-- УПАКОВОЧНЫЙ МАТЕРИАЛ -->
+   
       <div class="mb-16 bg-gray-900 p-8 rounded-2xl shadow-xl">
         <h3 class="text-3xl font-bold mb-6 text-purple-400">Упаковочный материал</h3>
 
         <template x-for="(group, index) in packagingGroups" :key="index">
           <div class="bg-gray-800/50 p-6 rounded-xl mb-6 border border-gray-700">
 
-            <!-- Главная строка — как на твоём скриншоте -->
+           
             <div class="grid grid-cols-2 md:grid-cols-6 gap-4 items-center">
               <select x-model="group.main.type" @change="updatePackagingGroup(index)"
                 class="px-5 py-3 bg-gray-800 rounded-lg border border-gray-700 focus:border-purple-500 text-sm">
@@ -169,14 +169,14 @@
                 placeholder="Ш, см" min="1" step="1" oninput="if(this.value<1)this.value=1"
                 class="px-5 py-3 bg-gray-800 rounded-lg border border-gray-700 focus:border-purple-500">
 
-              <!-- ВОЗВРАЩЁННОЕ КРАСИВОЕ ОКНО СУММЫ — КАК БЫЛО РАНЬШЕ -->
+            
               <div class="px-5 py-3 bg-gray-700 rounded-lg text-center">
                 <div class="text-sm text-gray-400 font-medium">Сумма:</div>
                 <div class="text-emerald-400 text-xl font-bold" x-text="group.main.sum.toLocaleString() + ' ₽'"></div>
               </div>
             </div>
 
-            <!-- ВОЗВРАЩЁННАЯ КРАСИВАЯ ДОП.УСЛУГА — КАК ТЫ ЛЮБИЛ -->
+           
             <template x-if="group.main.type">
               <div
                 class="mt-4 grid md:grid-cols-6 gap-4 items-center bg-gray-700/30 px-6 py-4 rounded-lg border border-gray-600">
@@ -206,13 +206,13 @@
         </p>
       </div>
 
-<!-- ДОПОЛНИТЕЛЬНЫЕ УСЛУГИ — ФИНАЛЬНО, КАК В ПЕРВОМ БЛОКЕ -->
+
 <div class="mb-16 bg-gray-900 p-8 rounded-2xl shadow-xl">
   <h3 class="text-3xl font-bold mb-6 text-purple-400">Дополнительные услуги</h3>
   <template x-for="(s, i) in extraServices" :key="i">
     <div class="grid md:grid-cols-4 gap-4 mb-4">
       
-        <!-- Выбор услуги -->
+      
         <select x-model="s.name" @change="updateExtraPrice(i); recalculate()"
                 class="px-5 py-3 bg-gray-800 rounded-lg border border-gray-700 focus:border-purple-500 text-sm">
           <option value="">Выберите услугу</option>
@@ -222,21 +222,21 @@
           <option>Сбор товара в комплекты</option>
         </select>
 
-        <!-- Количество — увеличенное поле -->
+      
         <input type="number" x-model.number="s.quantity" @input="recalculate()"
                placeholder="Кол-во" min="1" step="1" 
                oninput="if(this.value<1)this.value=1"
                class="px-5 py-3 bg-gray-800 rounded-lg border border-gray-700">
 
 
-        <!-- СУММА — СПРАВА, КАК В ПЕРВОМ БЛОКЕ -->
+       
         <div class="flex items-center px-5 py-3 bg-gray-700 rounded-lg font-medium justify-end">
           Сумма: 
           <span class="ml-3 text-emerald-400" 
                 x-text="(s.quantity * (s.price || 0)).toLocaleString() + ' ₽'"></span>
         </div>
 
-        <!-- КРАСНАЯ КНОПКА УДАЛИТЬ — справа -->
+     
         <button @click="extraServices.splice(i, 1); recalculate()"
                 class="bg-red-600 hover:bg-red-500 px-5 py-3 rounded-lg">
           Удалить
@@ -245,20 +245,20 @@
     </div>
   </template>
 
-  <!-- Фиолетовая кнопка добавить — как везде -->
+
   <button @click="extraServices.push({name: '', quantity: 1, price: 0}); recalculate()"
           class="bg-purple-600 hover:bg-purple-500 px-8 py-3 rounded-full font-medium text-lg">
     + Добавить услугу
   </button>
 
-  <!-- Итог — справа, как везде -->
+
   <p class="mt-8 text-2xl font-bold">
     Итого доп.услуги: 
     <span class="text-emerald-400" x-text="totalExtraServices.toLocaleString() + ' ₽'"></span>
   </p>
 </div>
 
-      <!-- ИТОГО -->
+    
       <div class="bg-gradient-to-r from-purple-900 via-pink-900 to-purple-900 p-12 rounded-3xl text-center shadow-2xl">
         <h3 class="text-5xl font-bold mb-8">ИТОГО</h3>
         <p class="text-3xl mb-4">Всего без скидки: <span class="text-emerald-400 font-bold"
@@ -337,7 +337,7 @@
             { maxH: 30, maxPerimeter: 71, price: 6 },
             { maxH: 40, maxPerimeter: 100, price: 10 }
           ],
-          // Новые: суммируем все 3 размера
+         
           'ВПП 3-х слойная': [
             { maxSum: 20, price: 5 },
             { maxSum: 40, price: 15 },
@@ -447,14 +447,14 @@ updateExtraPrice(i) {
 
 
 
-        // Правильная проверка: есть ли другая проверка на брак (кроме текущей строки)
+       
         hasOtherDefectCheck(currentIndex, thisType) {
           return this.processing.items.some((item, i) => {
             return i !== currentIndex && this.defectChecks.includes(item.type) && item.type !== thisType;
           });
         },
 
-        // При смене — сбрасываем все остальные проверки на брак
+       
         enforceSingleDefectCheck(changedIndex) {
           const selectedType = this.processing.items[changedIndex].type;
           if (this.defectChecks.includes(selectedType)) {
@@ -465,7 +465,7 @@ updateExtraPrice(i) {
             });
           }
         },
-        // Точная цена с копейками (без округления)
+       
 formatPrice(value) {
   const num = Number(value);
   if (isNaN(num)) return '0.00';
@@ -489,7 +489,7 @@ formatPrice(value) {
         
       };
     }
-    // ЗАПРЕТ ОТРИЦАТЕЛЬНЫХ ЧИСЕЛ ВО ВСЕХ INPUT[type=number]
+   
     document.addEventListener('input', function (e) {
       if (e.target.type === 'number' && e.target.value < 0) {
         e.target.value = 1;
@@ -500,5 +500,6 @@ formatPrice(value) {
     });
   </script>
 </body>
+
 
 </html>
