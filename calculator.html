@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="ico.png" type="image/png">
+  <title>Калькулятор юнит-экономики — Фулфилмент "Для Своих"</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+
+    .bg-Dark_Knight {
+      background-color: #0f0f1a;
+    }
+  </style>
+</head>
+
+<body class="bg-black text-white">
+
+  <!-- НАВИГАЦИЯ -->
+  <nav class="fixed top-0 w-full bg-gray-900 shadow-lg z-50 border-b border-purple-800">
+    <div class="max-w-7xl mx-auto px-4 flex justify-between items-center h-16">
+      <h1 class="text-2xl font-bold text-purple-400">Фулфилмент <span class="text-accent">"Для
+                            Своих"</span></h1>
+      <div class="hidden md:flex space-x-10">
+        <a href="index.html" class="text-gray-300 hover:text-purple-400 transition">Главная</a>
+        <a href="#" class="text-purple-400 font-bold">Калькулятор</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- КАЛЬКУЛЯТОР -->
+  <section class="pt-24 py-20 bg-Dark_Knight" x-data="calculatorData()">
+    <div class="max-w-5xl mx-auto px-4">
+
+      <h2
+        class="text-4xl md:text-6xl font-bold text-center mb-16 uppercase tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500">
+        Калькулятор юнит-экономики
+      </h2>
+
+      <!-- ПРИЁМ ТОВАРА -->
+      <div class="mb-16 bg-gray-900 p-8 rounded-2xl shadow-xl">
+        <h3 class="text-3xl font-bold mb-6 text-purple-400">Приём товара</h3>
+        <template x-for="(item, index) in reception.items" :key="index">
+          <div class="grid md:grid-cols-4 gap-4 mb-4">
+            <select x-model="item.type"
+              class="px-5 py-3 bg-gray-800 rounded-lg border border-gray-700 focus:border-purple-500">
+              <option value="">Выберите тип</option>
+              <option value="Короба">Короба – 60 ₽</option>
+              <option value="Баулы до 50кг">Баулы до 50 кг – 50 ₽</option>
+              <option value="Баулы после 50кг">Баулы после 50 кг – 100 ₽</option>
+              <option value="Паллеты">Паллеты – 300 ₽</option>
+              <option value="Распалечивание">Распалечивание – 200 ₽</option>
+              <option value="Снятие обрешетки с короба">Снятие обрешётки с короба – 100 ₽</option>
+              <option value="Снятие обрешетки за паллеты">Снятие обрешётки с паллеты – 300 ₽</option>
+            </select>
+            <input type="number" x-model.number="item.quantity" placeholder="Кол-во" min="0"
+              class="px-5 py-3 bg-gray-800 rounded-lg border border-gray-700">
+            <div class="flex items-center px-5 py-3 bg-gray-700 rounded-lg font-medium">
+              Сумма: <span class="ml-3 text-emerald-400"
+                x-text="(prices.reception[item.type] || 0) * item.quantity + ' ₽'"></span>
+            </div>
+            <button @click="reception.items.splice(index, 1)"
+              class="bg-red-600 hover:bg-red-500 px-5 py-3 rounded-lg">Удалить</button>
+          </div>
+        </template>
+        <button @click="reception.items.push({type:'', quantity:0})"
+          class="bg-purple-600 hover:bg-purple-500 px-8 py-3 rounded-full font-medium">
+          + Добавить строку
+        </button>
+        <p class="mt-8 text-2xl font-bold">Итого приём: <span class="text-emerald-400"
+            x-text="totalReception + ' ₽'"></span></p>
+      </div>
+
+      <!-- ОБРАБОТКА ТОВАРА — ИСПРАВЛЕННАЯ ЛОГИКА 100% -->
+      <div class="mb-16 bg-gray-900 p-8 rounded-2xl shadow-xl">
+        <h3 class="text-3xl font-bold mb-6 text-purple-400">Обработка товара</h3>
+
+        <template x-for="(item, index) in processing.items" :key="index">
+          <div class="grid md:grid-cols-4 gap-4 mb-4">
+            <select x-model="item.type" @change="enforceSingleDefectCheck(index)"
+              class="px-5 py-3 bg-gray-800 rounded-lg border border-gray-700 focus:border-purple-500 text-sm">
+
+              <option value="">Выберите услугу</option>
+              <option value="Приём и пересчёт">Приём и пересчёт – 3 ₽</option>
+
+              <!-- Три взаимоисключающие проверки на брак — правильная логика -->
+              <option value="Визуальная проверка на брак (без устранения дефектов)"
+                :disabled="hasOtherDefectCheck(index, 'Визуальная проверка на брак (без устранения дефектов)')">
+                Визуальная проверка на брак (без устранения дефектов) – 3 ₽
+              </option>
+              <option value="Проверка на брак с его устранением (малогабаритный товар)"
+                :disabled="hasOtherDefectCheck(index, 'Проверка на брак с его устранением (малогабаритный товар)')">
+                Проверка на брак с его устранением (малогабаритный товар) – 10 ₽
+              </option>
+              <option value="Проверка на брак с его устранением (габаритный товар)"
+                :disabled="hasOtherDefectCheck(index, 'Проверка на брак с его устранением (габаритный товар)')">
+                Проверка на брак с его устранением (габаритный товар) – 15 ₽
+              </option>
+
+              <option value="Маркировка (печать ШК + проклейка)">Маркировка ШК – 5 ₽</option>
+              <option value="Маркировка двойная (печать ШК + проклейка)">Маркировка двойная ШК – 10 ₽</option>
+              <option value="Укладка промаркированного товара в коробку">Укладка в коробку – 2 ₽</option>
+              <option value="Маркировка (печать честный знак + проклейка)">Маркировка Честный Знак – 5 ₽</option>
+              <option value="Маркировка двойная (печать честный знак + проклейка)">Маркировка двойная ЧЗ – 10 ₽</option>
+              <option value="Укладка промаркированного товара на паллет">Укладка на паллет – 5 ₽</option>
+              <option value="Маркировка тройная (печать этикетки + проклейка)">Маркировка тройная – 15 ₽</option>
+            </select>
+
+            <input type="number" x-model.number="item.quantity" placeholder="Количество единиц" min="0"
+              class="px-5 py-3 bg-gray-800 rounded-lg border border-gray-700">
+
+            <div class="flex items-center px-5 py-3 bg-gray-700 rounded-lg font-medium">
+              Сумма: <span class="ml-3 text-emerald-400"
+                x-text="(prices.processing[item.type] || 0) * item.quantity + ' ₽'"></span>
+            </div>
+
+            <button @click="processing.items.splice(index, 1)"
+              class="bg-red-600 hover:bg-red-500 px-5 py-3 rounded-lg">Удалить</button>
+          </div>
+        </template>
+
+        <button @click="processing.items.push({type:'', quantity:0})"
+          class="bg-purple-600 hover:bg-purple-500 px-8 py-3 rounded-full font-medium">
+          + Добавить услугу обработки
+        </button>
+
+        <p class="mt-8 text-2xl font-bold">Итого обработка: <span class="text-emerald-400"
+            x-text="totalProcessing + ' ₽'"></span></p>
+      </div>
+
+      <!-- УПАКОВОЧНЫЙ МАТЕРИАЛ -->
+      <div class="mb-16 bg-gray-900 p-8 rounded-2xl shadow-xl">
+        <h3 class="text-3xl font-bold mb-6 text-purple-400">Упаковочный материал</h3>
+
+        <template x-for="(group, index) in packagingGroups" :key="index">
+          <div class="bg-gray-800/50 p-6 rounded-xl mb-6 border border-gray-700">
+
+            <!-- Главная строка — как на твоём скриншоте -->
+            <div class="grid grid-cols-2 md:grid-cols-6 gap-4 items-center">
+              <select x-model="group.main.type" @change="updatePackagingGroup(index)"
+                class="px-5 py-3 bg-gray-800 rounded-lg border border-gray-700 focus:border-purple-500 text-sm">
+                <option value="">Тип упаковки</option>
+                <option value="Курьер пакет">Курьер-пакет</option>
+                <option value="ЗИП ЛОК пакет с бегунком">ЗИП ЛОК пакет</option>
+                <option value="БОПП пакет">БОПП пакет</option>
+                <option value="ВПП 3-х слойная">ВПП 3-х слойная</option>
+                <option value="Пленка рукав ПОФ для запайки">Пленка ПОФ</option>
+              </select>
+
+              <input type="number" x-model.number="group.main.quantity" @input="syncQuantity(index)"
+                placeholder="Кол-во" min="1" step="1" oninput="if(this.value<1)this.value=1"
+                class="px-5 py-3 bg-gray-800 rounded-lg border border-gray-700 focus:border-purple-500">
+
+              <input type="number" x-model.number="group.main.height" @input="updatePackagingGroup(index)"
+                placeholder="В, см" min="1" step="1" oninput="if(this.value<1)this.value=1"
+                class="px-5 py-3 bg-gray-800 rounded-lg border border-gray-700 focus:border-purple-500">
+
+              <input type="number" x-model.number="group.main.length" @input="updatePackagingGroup(index)"
+                placeholder="Д, см" min="1" step="1" oninput="if(this.value<1)this.value=1"
+                class="px-5 py-3 bg-gray-800 rounded-lg border border-gray-700 focus:border-purple-500">
+
+              <input type="number" x-model.number="group.main.width" @input="updatePackagingGroup(index)"
+                placeholder="Ш, см" min="1" step="1" oninput="if(this.value<1)this.value=1"
+                class="px-5 py-3 bg-gray-800 rounded-lg border border-gray-700 focus:border-purple-500">
+
+              <!-- ВОЗВРАЩЁННОЕ КРАСИВОЕ ОКНО СУММЫ — КАК БЫЛО РАНЬШЕ -->
+              <div class="px-5 py-3 bg-gray-700 rounded-lg text-center">
+                <div class="text-sm text-gray-400 font-medium">Сумма:</div>
+                <div class="text-emerald-400 text-xl font-bold" x-text="group.main.sum.toLocaleString() + ' ₽'"></div>
+              </div>
+            </div>
+
+            <!-- ВОЗВРАЩЁННАЯ КРАСИВАЯ ДОП.УСЛУГА — КАК ТЫ ЛЮБИЛ -->
+            <template x-if="group.main.type">
+              <div
+                class="mt-4 grid md:grid-cols-6 gap-4 items-center bg-gray-700/30 px-6 py-4 rounded-lg border border-gray-600">
+                <div class="text-sm text-gray-300 col-span-3" x-text="getServiceName(group.main.type)"></div>
+                <div class="px-5 py-3 bg-gray-800/50 rounded-lg text-gray-500 col-span-2 text-center">
+                  <span x-text="group.main.quantity"></span> шт (авто)
+                </div>
+                <div class="text-right font-medium text-emerald-400"
+                  x-text="getServiceSum(group.main.type, group.main.quantity) + ' ₽'"></div>
+              </div>
+            </template>
+
+            <button @click="packagingGroups.splice(index, 1)"
+              class="mt-4 text-red-400 hover:text-red-300 text-sm underline">
+              Удалить упаковку
+            </button>
+          </div>
+        </template>
+
+        <button @click="addPackagingGroup()"
+          class="bg-purple-600 hover:bg-purple-500 px-8 py-3 rounded-full font-medium">
+          + Добавить упаковку
+        </button>
+        <p class="mt-8 text-2xl font-bold">
+          Итого упаковочный материал:
+          <span class="text-emerald-400" x-text="totalPackaging + ' ₽'"></span>
+        </p>
+      </div>
+
+<!-- ДОПОЛНИТЕЛЬНЫЕ УСЛУГИ — ФИНАЛЬНО, КАК В ПЕРВОМ БЛОКЕ -->
+<div class="mb-16 bg-gray-900 p-8 rounded-2xl shadow-xl">
+  <h3 class="text-3xl font-bold mb-6 text-purple-400">Дополнительные услуги</h3>
+  <template x-for="(s, i) in extraServices" :key="i">
+    <div class="grid md:grid-cols-4 gap-4 mb-4">
+      
+        <!-- Выбор услуги -->
+        <select x-model="s.name" @change="updateExtraPrice(i); recalculate()"
+                class="px-5 py-3 bg-gray-800 rounded-lg border border-gray-700 focus:border-purple-500 text-sm">
+          <option value="">Выберите услугу</option>
+          <option>Сортировка по цвету / размеру / вкусу / виду</option>
+          <option>Вложение вкладыша (инструкции)</option>
+          <option>Вложение подарка</option>
+          <option>Сбор товара в комплекты</option>
+        </select>
+
+        <!-- Количество — увеличенное поле -->
+        <input type="number" x-model.number="s.quantity" @input="recalculate()"
+               placeholder="Кол-во" min="1" step="1" 
+               oninput="if(this.value<1)this.value=1"
+               class="px-5 py-3 bg-gray-800 rounded-lg border border-gray-700">
+
+
+        <!-- СУММА — СПРАВА, КАК В ПЕРВОМ БЛОКЕ -->
+        <div class="flex items-center px-5 py-3 bg-gray-700 rounded-lg font-medium justify-end">
+          Сумма: 
+          <span class="ml-3 text-emerald-400" 
+                x-text="(s.quantity * (s.price || 0)).toLocaleString() + ' ₽'"></span>
+        </div>
+
+        <!-- КРАСНАЯ КНОПКА УДАЛИТЬ — справа -->
+        <button @click="extraServices.splice(i, 1); recalculate()"
+                class="bg-red-600 hover:bg-red-500 px-5 py-3 rounded-lg">
+          Удалить
+        </button>
+      
+    </div>
+  </template>
+
+  <!-- Фиолетовая кнопка добавить — как везде -->
+  <button @click="extraServices.push({name: '', quantity: 1, price: 0}); recalculate()"
+          class="bg-purple-600 hover:bg-purple-500 px-8 py-3 rounded-full font-medium text-lg">
+    + Добавить услугу
+  </button>
+
+  <!-- Итог — справа, как везде -->
+  <p class="mt-8 text-2xl font-bold">
+    Итого доп.услуги: 
+    <span class="text-emerald-400" x-text="totalExtraServices.toLocaleString() + ' ₽'"></span>
+  </p>
+</div>
+
+      <!-- ИТОГО -->
+      <div class="bg-gradient-to-r from-purple-900 via-pink-900 to-purple-900 p-12 rounded-3xl text-center shadow-2xl">
+        <h3 class="text-5xl font-bold mb-8">ИТОГО</h3>
+        <p class="text-3xl mb-4">Всего без скидки: <span class="text-emerald-400 font-bold"
+            x-text="formatPrice(grandTotal) + ' ₽'"></span></p>
+        <hr class="my-10 border-purple-500">
+        <p class="text-3xl mb-4">Со скидкой 10% за первую поставку: <span class="text-yellow-300 font-bold"
+            x-text="formatPrice(grandTotal * 0.9) + ' ₽'"></span></p>
+      </div>
+      <div class="mt-16 text-center">
+        <a href="index.html"
+          class="inline-block bg-gray-800 hover:bg-gray-700 px-10 py-5 rounded-full text-2xl font-bold transition">
+          ← Вернуться на главную
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    function calculatorData() {
+      return {
+        prices: {
+          reception: {
+            'Короба': 60, 'Баулы до 50кг': 50, 'Баулы после 50кг': 100, 'Паллеты': 300,
+            'Распалечивание': 200, 'Снятие обрешетки с короба': 100, 'Снятие обрешетки за паллеты': 300
+          },
+          processing: {
+            'Приём и пересчёт': 3,
+            'Визуальная проверка на брак (без устранения дефектов)': 3,
+            'Проверка на брак с его устранением (малогабаритный товар)': 10,
+            'Маркировка (печать ШК + проклейка)': 5,
+            'Маркировка двойная (печать ШК + проклейка)': 10,
+            'Укладка промаркированного товара в коробку': 2,
+            'Проверка на брак с его устранением (габаритный товар)': 15,
+            'Маркировка (печать честный знак + проклейка)': 5,
+            'Маркировка двойная (печать честный знак + проклейка)': 10,
+            'Укладка промаркированного товара на паллет': 5,
+            'Маркировка тройная (печать этикетки + проклейка)': 15
+          }
+        },
+        defectChecks: [
+          'Визуальная проверка на брак (без устранения дефектов)',
+          'Проверка на брак с его устранением (малогабаритный товар)',
+          'Проверка на брак с его устранением (габаритный товар)'
+        ],
+
+        packagingServices: {
+          'Курьер пакет': { name: 'Упаковка товара в курьер пакет', price: 5 },
+          'ЗИП ЛОК пакет с бегунком': { name: 'Упаковка товара в ЗИП ЛОК', price: 5 },
+          'БОПП пакет': { name: 'Упаковка в БОПП пакет с клеевым клапаном', price: 7 },
+          'ВПП 3-х слойная': { name: 'Упаковка в 3-х слойную пупырчатую пленку', price: 8 },
+          'Пленка рукав ПОФ для запайки': { name: 'Упаковка / запайка в герметичную упаковку', price: 5 }
+        },
+        packagingGroups: [],
+
+        packagingRules: {
+          'Курьер пакет': [
+            { maxH: 10, maxPerimeter: 15, price: 3 },
+            { maxH: 15, maxPerimeter: 21, price: 3 },
+            { maxH: 20, maxPerimeter: 30, price: 5 }
+          ],
+          'ЗИП ЛОК пакет с бегунком': [
+            { maxH: 15, maxPerimeter: 45, price: 6 },
+            { maxH: 20, maxPerimeter: 55, price: 10 },
+            { maxH: 20, maxPerimeter: 60, price: 12 },
+            { maxH: 25, maxPerimeter: 65, price: 13 },
+            { maxH: 30, maxPerimeter: 70, price: 15 },
+            { maxH: 40, maxPerimeter: 100, price: 18 },
+            { maxH: 45, maxPerimeter: 105, price: 20 },
+            { maxH: 50, maxPerimeter: 120, price: 25 }
+          ],
+          'БОПП пакет': [
+            { maxH: 15, maxPerimeter: 25, price: 1 },
+            { maxH: 15, maxPerimeter: 35, price: 3 },
+            { maxH: 20, maxPerimeter: 45, price: 5 },
+            { maxH: 25, maxPerimeter: 60, price: 6 },
+            { maxH: 30, maxPerimeter: 71, price: 6 },
+            { maxH: 40, maxPerimeter: 100, price: 10 }
+          ],
+          // Новые: суммируем все 3 размера
+          'ВПП 3-х слойная': [
+            { maxSum: 20, price: 5 },
+            { maxSum: 40, price: 15 },
+            { maxSum: 60, price: 25 },
+            { maxSum: 80, price: 35 },
+            { maxSum: 100, price: 40 },
+            { maxSum: 120, price: 50 }
+          ],
+          'Пленка рукав ПОФ для запайки': [
+            { maxSum: 30, price: 5 },
+            { maxSum: 40, price: 6 },
+            { maxSum: 60, price: 7 },
+            { maxSum: 90, price: 10 },
+            { maxSum: 120, price: 17 },
+            { maxSum: 150, price: 24 }
+          ]
+        },
+
+        packagingServicePrice: {
+          'Курьер пакет': 5,
+          'ЗИП ЛОК пакет с бегунком': 5,
+          'БОПП пакет': 7,
+          'ВПП 3-х слойная': 8,
+          'Пленка рукав ПОФ для запайки': 5
+        },
+
+        reception: { items: [] },
+        processing: { items: [] },
+        packaging: { items: [] },
+        extra: { items: [] },
+
+        getServiceName(type) {
+          const names = {
+            'Курьер пакет': 'Упаковка товара в курьер-пакет',
+            'ЗИП ЛОК пакет с бегунком': 'Упаковка товара в ЗИП ЛОК',
+            'БОПП пакет': 'Упаковка в БОПП пакет с клеевым клапаном',
+            'ВПП 3-х слойная': 'Упаковка в 3-х слойную пупырчатую пленку',
+            'Пленка рукав ПОФ для запайки': 'Упаковка / запайка в герметичную упаковку'
+          };
+          return names[type] || '';
+        },
+
+        getServiceSum(type, qty) {
+          return (this.packagingServicePrice[type] || 0) * (qty || 0);
+        },
+
+        addPackagingGroup() {
+          this.packagingGroups.push({
+            main: { type: '', quantity: 1, height: 0, length: 0, width: 0, sum: 0 }
+          });
+        },
+
+        updatePackagingGroup(index) {
+          const g = this.packagingGroups[index];
+          const type = g.main.type;
+          if (!type || !this.packagingRules[type]) {
+            g.main.sum = 0;
+            return;
+          }
+
+          const h = g.main.height || 0;
+          const l = g.main.length || 0;
+          const w = g.main.width || 0;
+          const qty = g.main.quantity || 0;
+
+          let pricePerUnit = 0;
+
+          if (type === 'ВПП 3-х слойная' || type === 'Пленка рукав ПОФ для запайки') {
+            const totalSum = h + l + w;
+            for (const rule of this.packagingRules[type]) {
+              if (totalSum <= rule.maxSum) {
+                pricePerUnit = rule.price;
+                break;
+              }
+            }
+          } else {
+            const perimeter = l + w;
+            for (const rule of this.packagingRules[type]) {
+              if (h <= rule.maxH && perimeter <= rule.maxPerimeter) {
+                pricePerUnit = rule.price;
+                break;
+              }
+            }
+          }
+
+          g.main.sum = pricePerUnit * qty;
+        },
+
+        syncQuantity(index) {
+          this.updatePackagingGroup(index);
+        },
+
+
+extraServices: [],
+
+extraServicePrices: {
+  'Сортировка по цвету / размеру / вкусу / виду': 5,
+  'Вложение вкладыша (инструкции)': 3,
+  'Вложение подарка': 3,
+  'Сбор товара в комплекты': 5
+},
+
+updateExtraPrice(i) {
+  const name = this.extraServices[i].name;
+  this.extraServices[i].price = this.extraServicePrices[name] || 0;
+},
+
+
+
+        // Правильная проверка: есть ли другая проверка на брак (кроме текущей строки)
+        hasOtherDefectCheck(currentIndex, thisType) {
+          return this.processing.items.some((item, i) => {
+            return i !== currentIndex && this.defectChecks.includes(item.type) && item.type !== thisType;
+          });
+        },
+
+        // При смене — сбрасываем все остальные проверки на брак
+        enforceSingleDefectCheck(changedIndex) {
+          const selectedType = this.processing.items[changedIndex].type;
+          if (this.defectChecks.includes(selectedType)) {
+            this.processing.items.forEach((item, i) => {
+              if (i !== changedIndex && this.defectChecks.includes(item.type)) {
+                item.type = '';
+              }
+            });
+          }
+        },
+        // Точная цена с копейками (без округления)
+formatPrice(value) {
+  const num = Number(value);
+  if (isNaN(num)) return '0.00';
+  return num.toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+},
+        get totalReception() { return this.reception.items.reduce((s, i) => s + (this.prices.reception[i.type] || 0) * i.quantity, 0); },
+        get totalProcessing() { return this.processing.items.reduce((s, i) => s + (this.prices.processing[i.type] || 0) * i.quantity, 0); },
+        get totalExtraServices() { return this.extraServices.reduce((sum, s) => sum + (s.quantity || 0) * (s.price || 0), 0);},
+        get totalPackaging() { let total = 0; this.packagingGroups.forEach(g => { total += g.main.sum || 0; if (g.main.type) { total += this.getServiceSum(g.main.type, g.main.quantity); } }); return total; },
+        get totalExtra() { return this.extra.items.reduce((s, i) => s + i.quantity * i.price, 0); },
+        get grandTotal() {
+  return this.totalReception + 
+         this.totalProcessing + 
+         this.totalPackaging + 
+         this.totalExtraServices;
+},
+        get totalUnits() { return this.processing.items.reduce((s, i) => s + (i.quantity || 0), 0); },  
+        get grandTotalWithDiscount() {
+  return this.grandTotal * 0.9;
+},
+        
+      };
+    }
+    // ЗАПРЕТ ОТРИЦАТЕЛЬНЫХ ЧИСЕЛ ВО ВСЕХ INPUT[type=number]
+    document.addEventListener('input', function (e) {
+      if (e.target.type === 'number' && e.target.value < 0) {
+        e.target.value = 1;
+      }
+      if (e.target.type === 'number' && !e.target.value) {
+        e.target.value = 1;
+      }
+    });
+  </script>
+</body>
+
+</html>
