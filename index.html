@@ -1,542 +1,780 @@
 <!DOCTYPE html>
 <html lang="ru" class="scroll-smooth">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="Фулфилмент для маркетплейсов Wildberries, OZON, Яндекс Маркет. Забор, упаковка, доставка за 24 часа от 4₽ за единицу. Бесплатное хранение.">
-  <title>Фулфилмент "Для Своих" — Wildberries, OZON, Яндекс Маркет</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description"
+        content="Фулфилмент для маркетплейсов Wildberries, OZON. Забор, упаковка, доставка за 24 часа от 4₽ за единицу. Бесплатное хранение.">
+    <link rel="icon" href="ico.png" type="image/png">
+    <title>Фулфилмент "Для Своих" — Wildberries, OZON</title>
 
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary: '#6366f1', 
-            accent: '#8b5cf6',  
-            blue: '#012',    
-            dark: '#011', 
-            Dark_Knight: '#101928',
-          }
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6366f1',
+                        accent: '#8b5cf6',
+                        blue: '#012',
+                        dark: '#011',
+                        Dark_Knight: '#101928',
+                    }
+                }
+            }
         }
-      }
-    }
-  </script>
+    </script>
 
-  <!-- Alpine.js -->
-  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- Alpine.js -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
-  <!-- Google Fonts: Inter -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    body { font-family: 'Inter', sans-serif; }
-  </style>
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
 </head>
+
 <body class="bg-black text-white">
 
-  <!-- Навигация -->
-  <nav class="fixed top-0 w-full bg-gray-900 shadow-lg z-50 border-b border-purple-800" x-data="{ open: false }">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center h-16">
-        <div class="flex items-center">
-          <h1 class="text-2xl font-bold text-purple-400">Фулфилмент <span class="text-accent">"Для Своих"</span></h1>
+    <!-- Навигация -->
+    <nav class="fixed top-0 w-full bg-gray-900 shadow-lg z-50 border-b border-purple-800" x-data="{ open: false }">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <h1 class="text-2xl font-bold text-purple-400">Фулфилмент <span class="text-accent">"Для
+                            Своих"</span></h1>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#hero" class="text-gray-300 hover:text-purple-400 py-2 transition">Главная</a>
+                    <a href="#features" class="text-gray-300 hover:text-purple-400 py-2 transition">Наши возможности
+                    </a>
+                    <a href="#stages" class="text-gray-300 hover:text-purple-400 py-2 transition">Этапы</a>
+                    <a href="#pricelist" class="text-gray-300 hover:text-purple-400 py-2 transition">Цены</a>
+                    <a href="#partners" class="text-gray-300 hover:text-purple-400 py-2 transition">Партнёры</a>
+                    <a href="#reviews" class="text-gray-300 hover:text-purple-400 py-2 transition">Отзывы</a>
+                    <a href="#contact"
+                        class="bg-purple-600 text-white hover:bg-purple-500 px-2 py-2 rounded-full hover:bg-indigo-600 transition">Связаться</a>
+                    <a href="calculator.html" 
+                        class="bg-purple-600 text-white hover:bg-purple-500 px-2 py-2 rounded-full hover:bg-indigo-600 transition">Калькулятор</a>    
+                </div>
+                <button @click="open = !open" class="md:hidden">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
         </div>
-        <div class="hidden md:flex space-x-8">
-          <a href="#hero" class="text-gray-300 hover:text-purple-400 py-2 transition">Главная</a>
-          <a href="#features" class="text-gray-300 hover:text-purple-400 py-2 transition">Наши возможности </a>
-          <a href="#stages" class="text-gray-300 hover:text-purple-400 py-2 transition">Этапы</a>
-          <a href="#pricelist" class="text-gray-300 hover:text-purple-400 py-2 transition">Цены</a>
-          <a href="#partners" class="text-gray-300 hover:text-purple-400 py-2 transition">Партнёры</a>
-          <a href="#reviews" class="text-gray-300 hover:text-purple-400 py-2 transition">Отзывы</a>
-          <a href="#contact" class="bg-purple-600 text-white hover:bg-purple-500 px-5 py-2 rounded-full hover:bg-indigo-600 transition">Связаться</a>
+        <!-- Мобильное меню -->
+        <div x-show="open" class="md:hidden bg-gray-900 border-t border-purple-800">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="#hero" @click="open=false"
+                    class="block px-3 py-2 text-gray-300 hover:bg-gray-800 rounded">Главная</a>
+                <a href="#features" @click="open=false"
+                    class="block px-3 py-2 text-gray-300 hover:bg-gray-800 rounded">Преимущества</a>
+                <a href="#stages" @click="open=false"
+                    class="block px-3 py-2 text-gray-300 hover:bg-gray-800 rounded">Этапы</a>
+                <a href="#pricelist" @click="open=false"
+                    class="block px-3 py-2 text-gray-300 hover:bg-gray-800 rounded">Цены</a>
+                <a href="#partners" @click="open=false"
+                    class="block px-3 py-2 text-gray-300 hover:bg-gray-800 rounded">Партнёры</a>
+                <a href="#reviews" @click="open=false"
+                    class="block px-3 py-2 text-gray-300 hover:bg-gray-800 rounded">Отзывы</a>
+                <a href="#contact" @click="open=false"
+                    class="block px-3 py-2 bg-purple-600 text-white hover:bg-purple-500 rounded text-center">Связаться</a>
+                <a href="calculator.html"  
+                    class="block px-3 py-2 bg-purple-600 text-white hover:bg-purple-500 rounded text-center">Калькулятор</a>
+            </div>
         </div>
-        <button @click="open = !open" class="md:hidden">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-          </svg>
-        </button>
-      </div>
-    </div>
-    <!-- Мобильное меню -->
-    <div x-show="open" class="md:hidden bg-gray-900 border-t border-purple-800">
-      <div class="px-2 pt-2 pb-3 space-y-1">
-        <a href="#hero" @click="open=false" class="block px-3 py-2 text-gray-300 hover:bg-gray-800 rounded">Главная</a>
-        <a href="#features" @click="open=false" class="block px-3 py-2 text-gray-300 hover:bg-gray-800 rounded">Преимущества</a>
-        <a href="#stages" @click="open=false" class="block px-3 py-2 text-gray-300 hover:bg-gray-800 rounded">Этапы</a>
-        <a href="#pricelist" @click="open=false" class="block px-3 py-2 text-gray-300 hover:bg-gray-800 rounded">Цены</a>
-        <a href="#partners" @click="open=false" class="block px-3 py-2 text-gray-300 hover:bg-gray-800 rounded">Партнёры</a>
-        <a href="#reviews" @click="open=false" class="block px-3 py-2 text-gray-300 hover:bg-gray-800 rounded">Отзывы</a>
-        <a href="#contact" @click="open=false" class="block px-3 py-2 bg-purple-600 text-white hover:bg-purple-500 rounded text-center">Связаться</a>
-      </div>
-    </div>
-  </nav>
+    </nav>
 
-  <!-- Герой -->
-<!-- Герой с фоновым изображением -->
-<section id="hero" class="pt-24 pb-20 bg-cover bg-center bg-no-repeat text-white relative"
-     style="background-image: url('https://storage.googleapis.com/d_images/ProductImage/1450/146/Cajas_de_cart%C3%B3n_para_env%C3%ADos_mar%C3%ADtimos.jpg');">
-  <!-- Затемнение для читаемости -->
-  <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+    <!-- Герой -->
+    <!-- Герой с фоновым изображением -->
+    <section id="hero" class="pt-24 pb-20 bg-cover bg-center bg-no-repeat text-white relative"
+        style="background-image: url('https://storage.googleapis.com/d_images/ProductImage/1450/146/Cajas_de_cart%C3%B3n_para_env%C3%ADos_mar%C3%ADtimos.jpg');">
+        <!-- Затемнение для читаемости -->
+        <div class="absolute inset-0 bg-black bg-opacity-50"></div>
 
-  <div class="max-w-7xl mx-auto px-4 text-center relative z-10">
-    <h1 class="text-5xl md:text-6xl font-bold mb-6">
-      ФУЛФИЛМЕНТ <br>
-      <span class="text-yellow-400 drop-shadow-lg">"ДЛЯ СВОИХ"</span>
-    </h1>
-    <p class="text-xl md:text-2xl mb-8 max-w-4xl mx-auto font-medium">
-      Оперативный забор, обработка и доставка товара до маркетплейсов 
-      <strong>Wildberries, OZON</strong> за <strong>24 часа</strong>
-    </p>
-    <p class="text-lg mb-10">Продаем сами, помогаем другим!</p>
-    <p class="text-4xl font-bold mb-10">от 3 рублей за единицу</p>
-    <a href="#contact" class="bg-gray-900 text-white px-8 py-4 rounded-full text-lg font-bold hover:bg-gray-800 transition inline-block shadow-lg">
-      Оставить заявку
-    </a>
-  </div>
-</section>
-<hr class="border-t border-dark" />
+        <div class="max-w-7xl mx-auto px-4 text-center relative z-10">
+            <h1 class="text-5xl md:text-6xl font-bold mb-6">
+                ФУЛФИЛМЕНТ <br>
+                <span class="text-yellow-400 drop-shadow-lg">"ДЛЯ СВОИХ"</span>
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 max-w-4xl mx-auto font-medium">
+                Оперативный забор, обработка и доставка товара до маркетплейсов
+                <strong>Wildberries, OZON</strong> за <strong>24 часа</strong>
+            </p>
+            <p class="text-lg mb-10">Продаем сами, помогаем другим!</p>
+            <p class="text-4xl font-bold mb-10">от 3 рублей за единицу</p>
+            <a href="#contact"
+                class="bg-gray-900 text-white px-8 py-4 rounded-full text-lg font-bold hover:bg-gray-800 transition inline-block shadow-lg">
+                Оставить заявку
+            </a>
+        </div>
+    </section>
+    <hr class="border-t border-dark" />
 
-  <!-- ЕДИНЫЙ БЛОК: ОСНОВНЫЕ ВОЗМОЖНОСТИ ФУЛФИЛМЕНТА -->
-<section id="features" class="py-20 bg-Dark_Knight text-white">
-  <div class="max-w-7xl mx-auto px-4">
-    <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 uppercase tracking-wider">
-      ОСНОВНЫЕ ВОЗМОЖНОСТИ ФУЛФИЛМЕНТА
-    </h2>
+    <!-- ЕДИНЫЙ БЛОК: ОСНОВНЫЕ ВОЗМОЖНОСТИ ФУЛФИЛМЕНТА -->
+    <section id="features" class="py-20 bg-Dark_Knight text-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 uppercase tracking-wider">
+                ОСНОВНЫЕ ВОЗМОЖНОСТИ ФУЛФИЛМЕНТА
+            </h2>
 
-    <div class="grid md:grid-cols-3 gap-8">
-      <!-- 01 -->
-      <div class="bg-gray-800 p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-shadow">
-        <div class="w-12 h-12 bg-purple-600 text-white rounded-full flex items-center justify-center text-lg font-bold mx-auto mb-4">01</div>
-        <h3 class="text-xl font-bold text-center mb-2">Собственный автопарк</h3>
-        <p class="text-sm text-gray-300 text-center">ГАЗель Бизнес и Некст (20 м³). Без посредников.</p>
-      </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- 01 -->
+                <div class="bg-gray-800 p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-shadow">
+                    <div
+                        class="w-12 h-12 bg-purple-600 text-white rounded-full flex items-center justify-center text-lg font-bold mx-auto mb-4">
+                        01</div>
+                    <h3 class="text-xl font-bold text-center mb-2">Собственный автопарк</h3>
+                    <p class="text-sm text-gray-300 text-center">ГАЗель Бизнес и Некст (20 м³). Без посредников.</p>
+                </div>
 
-      <!-- 02 -->
-      <div class="bg-gray-800 p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-shadow">
-        <div class="w-12 h-12 bg-purple-600 text-white rounded-full flex items-center justify-center text-lg font-bold mx-auto mb-4">02</div>
-        <h3 class="text-xl font-bold text-center mb-2">Связи на складах</h3>
-        <p class="text-sm text-gray-300 text-center">Приёмка за 1–2 дня. Нет очередей и лимитов.</p>
-      </div>
+                <!-- 02 -->
+                <div class="bg-gray-800 p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-shadow">
+                    <div
+                        class="w-12 h-12 bg-purple-600 text-white rounded-full flex items-center justify-center text-lg font-bold mx-auto mb-4">
+                        02</div>
+                    <h3 class="text-xl font-bold text-center mb-2">Связи на складах</h3>
+                    <p class="text-sm text-gray-300 text-center">Приёмка за 1–2 дня. Нет очередей и лимитов.</p>
+                </div>
 
-      <!-- 03 -->
-      <div class="bg-gray-800 p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-shadow">
-        <div class="w-12 h-12 bg-purple-600 text-white rounded-full flex items-center justify-center text-lg font-bold mx-auto mb-4">04</div>
-        <h3 class="text-xl font-bold text-center mb-2">Материальная ответственность</h3>
-        <p class="text-sm text-gray-300 text-center">Полный возврат убытков по нашей вине.</p>
-      </div>
+                <!-- 03 -->
+                <div class="bg-gray-800 p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-shadow">
+                    <div
+                        class="w-12 h-12 bg-purple-600 text-white rounded-full flex items-center justify-center text-lg font-bold mx-auto mb-4">
+                        03</div>
+                    <h3 class="text-xl font-bold text-center mb-2">Материальная ответственность</h3>
+                    <p class="text-sm text-gray-300 text-center">Полный возврат убытков по нашей вине.</p>
+                </div>
 
-      <!-- 05 -->
-      <div class="bg-gray-800 p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-shadow">
-        <div class="w-12 h-12 bg-purple-600 text-white rounded-full flex items-center justify-center text-lg font-bold mx-auto mb-4">05</div>
-        <h3 class="text-xl font-bold text-center mb-2">Персональный менеджер</h3>
-        <p class="text-sm text-gray-300 text-center">Поддержка 24/7, даже в выходные.</p>
-      </div>
+                <!-- 05 -->
+                <div class="bg-gray-800 p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-shadow">
+                    <div
+                        class="w-12 h-12 bg-purple-600 text-white rounded-full flex items-center justify-center text-lg font-bold mx-auto mb-4">
+                        04</div>
+                    <h3 class="text-xl font-bold text-center mb-2">Персональный менеджер</h3>
+                    <p class="text-sm text-gray-300 text-center">Поддержка 24/7, даже в выходные.</p>
+                </div>
 
-      <!-- 06 -->
-      <div class="bg-gray-800 p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-shadow">
-        <div class="w-12 h-12 bg-purple-600 text-white rounded-full flex items-center justify-center text-lg font-bold mx-auto mb-4">06</div>
-        <h3 class="text-xl font-bold text-center mb-2">Бесплатное хранение</h3>
-        <p class="text-sm text-gray-300 text-center">365 дней в году. Условия у менеджера.</p>
-      </div>
+                <!-- 06 -->
+                <div class="bg-gray-800 p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-shadow">
+                    <div
+                        class="w-12 h-12 bg-purple-600 text-white rounded-full flex items-center justify-center text-lg font-bold mx-auto mb-4">
+                        05</div>
+                    <h3 class="text-xl font-bold text-center mb-2">Бесплатное хранение</h3>
+                    <p class="text-sm text-gray-300 text-center">365 дней в году. Условия у менеджера.</p>
+                </div>
 
-      <!-- 07 -->
-      <div class="bg-gray-800 p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-shadow">
-        <div class="w-12 h-12 bg-purple-600 text-white rounded-full flex items-center justify-center text-lg font-bold mx-auto mb-4">07</div>
-        <h3 class="text-xl font-bold text-center mb-2">Фото и видеоотчёт</h3>
-        <p class="text-sm text-gray-300 text-center">По желанию — каждый этап.</p>
-      </div>
+                <!-- 07 -->
+                <div class="bg-gray-800 p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-shadow">
+                    <div
+                        class="w-12 h-12 bg-purple-600 text-white rounded-full flex items-center justify-center text-lg font-bold mx-auto mb-4">
+                        06</div>
+                    <h3 class="text-xl font-bold text-center mb-2">Фото и видеоотчёт</h3>
+                    <p class="text-sm text-gray-300 text-center">По желанию — каждый этап.</p>
+                </div>
 
-      <!-- 08 -->
-      <div class="bg-gray-800 p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-shadow">
-        <div class="w-12 h-12 bg-purple-600 text-white rounded-full flex items-center justify-center text-lg font-bold mx-auto mb-4">08</div>
-        <h3 class="text-xl font-bold text-center mb-2">Любая упаковка</h3>
-        <p class="text-sm text-gray-300 text-center">Пайка, вакуум, жёсткая, крупногабарит.</p>
-      </div>
+                <!-- 08 -->
+                <div class="bg-gray-800 p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-shadow">
+                    <div
+                        class="w-12 h-12 bg-purple-600 text-white rounded-full flex items-center justify-center text-lg font-bold mx-auto mb-4">
+                        07</div>
+                    <h3 class="text-xl font-bold text-center mb-2">Любая упаковка</h3>
+                    <p class="text-sm text-gray-300 text-center">Пайка, вакуум, жёсткая, крупногабарит.</p>
+                </div>
 
-      <!-- 09 -->
-      <div class="bg-gray-800 p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-shadow">
-        <div class="w-12 h-12 bg-purple-600 text-white rounded-full flex items-center justify-center text-lg font-bold mx-auto mb-4">09</div>
-        <h3 class="text-xl font-bold text-center mb-2">Видеонаблюдение</h3>
-        <p class="text-sm text-gray-300 text-center">7 камер онлайн + сигнализация.</p>
-      </div>
-    </div>
-  </div>
-</section>
-<hr class="border-t border-dark" />
+                <!-- 09 -->
+                <div class="bg-gray-800 p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-shadow">
+                    <div
+                        class="w-12 h-12 bg-purple-600 text-white rounded-full flex items-center justify-center text-lg font-bold mx-auto mb-4">
+                        08</div>
+                    <h3 class="text-xl font-bold text-center mb-2">Видеонаблюдение</h3>
+                    <p class="text-sm text-gray-300 text-center">7 камер онлайн + сигнализация.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <hr class="border-t border-dark" />
 
-  <!-- НАША МИССИЯ + КНОПКИ + МОДАЛЬНАЯ ФОРМА -->
-<section class="py-20 bg-blue text-white" x-data="{ showForm: false }">
-  <div class="max-w-5xl mx-auto px-4 text-center">
-    <h2 class="text-4xl md:text-5xl font-bold mb-6 uppercase tracking-wider">НАША МИССИЯ</h2>
-    <p class="text-lg md:text-xl mb-12 max-w-3xl mx-auto">
-      Оптимизировать Ваши расходы и избавить от рутины, чтобы Вы сосредоточились на масштабировании бизнеса.
-    </p>
+    <!-- НАША МИССИЯ + КНОПКИ + МОДАЛЬНАЯ ФОРМА -->
+    <section class="py-20 bg-blue text-white" x-data="{ showForm: false }">
+        <div class="max-w-5xl mx-auto px-4 text-center">
+            <h2 class="text-4xl md:text-5xl font-bold mb-6 uppercase tracking-wider">НАША МИССИЯ</h2>
+            <p class="text-lg md:text-xl mb-12 max-w-3xl mx-auto">
+                Оптимизировать Ваши расходы и избавить от рутины, чтобы Вы сосредоточились на масштабировании бизнеса.
+            </p>
 
-    <!-- Список преимуществ -->
-    <div class="bg-gray-800 p-8 rounded-3xl shadow-2xl mb-12">
-      <div class="grid md:grid-cols-2 gap-6 text-left">
-        <ul class="space-y-3">
-          <li class="flex items-center text-purple-400"><span class="mr-3">✓</span> Сэкономить на аренде склада</li>
-          <li class="flex items-center text-purple-400"><span class="mr-3">✓</span> Сократить штат</li>
-          <li class="flex items-center text-purple-400"><span class="mr-3">✓</span> Снизить комиссию WB в 2–3 раза</li>
-        </ul>
-        <ul class="space-y-3">
-          <li class="flex items-center text-purple-400"><span class="mr-3">✓</span> Доставить товар в кратчайшие сроки по системе FBS</li>
-          <li class="flex items-center text-purple-400"><span class="mr-3">✓</span> Создать и оптимизировать карточку</li>
-          <li class="flex items-center text-purple-400"><span class="mr-3">✓</span> Создать поставку</li>
-        </ul>
-      </div>
-    </div>
+            <!-- Список преимуществ -->
+            <div class="bg-gray-800 p-8 rounded-3xl shadow-2xl mb-12">
+                <div class="grid md:grid-cols-2 gap-6 text-left">
+                    <ul class="space-y-3">
+                        <li class="flex items-center text-purple-400">Сэкономить на аренде склада</li>
+                        <li class="flex items-center text-purple-400">Сократить штат</li>
+                        <li class="flex items-center text-purple-400">Снизить комиссию WB в 2–3 раза</li>
+                    </ul>
+                    <ul class="space-y-3">
+                        <li class="flex items-center text-purple-400">Доставить товар в кратчайшие сроки по системе FBS
+                        </li>
+                        <li class="flex items-center text-purple-400">Создать и оптимизировать карточку</li>
+                        <li class="flex items-center text-purple-400">Создать поставку</li>
+                    </ul>
+                </div>
+            </div>
 
-    <p class="text-lg font-semibold mb-10">Гибкая система скидок — уточняйте у менеджера!</p>
+            <p class="text-lg font-semibold mb-10">Гибкая система скидок — все суммируются!</p>
 
-    <!-- КНОПКИ -->
-    <div class="flex flex-col sm:flex-row gap-6 justify-center">
-      <!-- Кнопка 1: Получить скидку 10% → открывает форму -->
-      <button 
-        @click="showForm = true" 
-        class="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-4 rounded-full text-lg font-bold hover:shadow-xl transform hover:scale-105 transition">
-        Получить скидку 10%
-      </button>
+            <!-- КНОПКИ -->
+            <div class="flex flex-col sm:flex-row gap-6 justify-center">
+                <button @click="showForm = true"
+                    class="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-4 rounded-full text-lg font-bold hover:shadow-xl transform hover:scale-105 transition">
+                    Получить скидку 10%
+                </button>
 
-      <!-- Кнопка 2: Получить прайслист → новая вкладка -->
-      <a 
-        href="https://drive.google.com/file/d/1XWPfHaujALkLGCNY9RVD_vUp8KDhT7fd/view" 
-        target="_blank" 
-        class="bg-gray-700 text-white px-8 py-4 rounded-full text-lg font-bold hover:bg-gray-600 hover:shadow-xl transform hover:scale-105 transition">
-        Получить прайслист
-      </a>
-    </div>
-  </div>
+                <a href="https://drive.google.com/file/d/1XWPfHaujALkLGCNY9RVD_vUp8KDhT7fd/view" target="_blank"
+                    class="bg-gray-700 text-white px-8 py-4 rounded-full text-lg font-bold hover:bg-gray-600 hover:shadow-xl transform hover:scale-105 transition">
+                    Получить прайслист
+                </a>
+            </div>
+        </div>
 
-  <!-- МОДАЛЬНАЯ ФОРМА (Alpine.js) -->
-  <div 
-    x-show="showForm" 
-    class="fixed inset-0 bg-black bg-opacity-70 z-50 flex items-center justify-center p-4" 
-    x-transition:enter="transition ease-out duration-300"
-    x-transition:enter-start="opacity-0 scale-90"
-    x-transition:enter-end="opacity-100 scale-100"
-    x-transition:leave="transition ease-in duration-200"
-    x-transition:leave-start="opacity-100 scale-100"
-    x-transition:leave-end="opacity-0 scale-90"
-    @keydown.escape.window="showForm = false">
-    
-    <div @click.away="showForm = false" class="bg-gray-900 p-8 rounded-2xl max-w-md w-full shadow-2xl">
-      <h3 class="text-2xl font-bold mb-6 text-center text-purple-400">Получить скидку 10%</h3>
-      
-      <form action="https://formspree.io/f/ВАШ_ID" method="POST" class="space-y-5">
-        <input 
-          type="text" 
-          name="name" 
-          placeholder="Ваше имя" 
-          required 
-          class="w-full px-5 py-3 rounded-lg bg-gray-800 text-white border border-gray-700 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500 transition">
-        
-        <input 
-          type="tel" 
-          name="phone" 
-          placeholder="Телефон" 
-          required 
-          class="w-full px-5 py-3 rounded-lg bg-gray-800 text-white border border-gray-700 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500 transition">
-        
-        <input 
-          type="email" 
-          name="email" 
-          placeholder="Email" 
-          required 
-          class="w-full px-5 py-3 rounded-lg bg-gray-800 text-white border border-gray-700 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500 transition">
-        
-        <button 
-          type="submit" 
-          class="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-3 rounded-lg font-bold hover:shadow-lg transform hover:scale-105 transition">
-          Отправить заявку
-        </button>
-      </form>
+        <!-- МОДАЛЬНАЯ ФОРМА -->
+        <div x-show="showForm" x-init="showForm = false"
+            class="fixed inset-0 bg-black bg-opacity-70 z-50 flex items-center justify-center p-4" x-transition
+            @keydown.escape.window="showForm = false" style="display: none;">
 
-      <button 
-        @click="showForm = false" 
-        class="mt-4 text-gray-400 hover:text-white text-sm w-full">
-        Закрыть
-      </button>
-    </div>
-  </div>
-</section>
-<hr class="border-t border-dark" />
+            <div @click.away="showForm = false"
+                class="bg-gray-900 dark:bg-white p-8 rounded-2xl max-w-md w-full shadow-2xl border dark:border-gray-300">
+                <h3 class="text-2xl font-bold mb-6 text-center text-purple-400 dark:text-purple-600">Получить скидку 10%
+                </h3>
 
-  <!-- Telegram-менеджера -->
-  <section class="py-20 bg-Dark_Knight text-white">
-    <div class="max-w-4xl mx-auto px-4 text-center">
-      <h2 class="text-3xl font-bold mb-6">Telegram чат с личным менеджером</h2>
-      <p class="text-xl mb-8">Ваш верный помощник 24/7</p>
-      <a href="https://t.me/GerasimovSvoi" target="_blank" class="bg-gray-800 text-purple-400 px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-100 transition">
-        Перейти в Telegram
-      </a>
-    </div>
-  </section>
-<hr class="border-t border-dark" />
+                <form id="modalForm" class="space-y-5">
+                    <!-- Имя -->
+                    <input type="text" id="name" name="name" placeholder="Ваше имя" required pattern="[А-Яа-яЁё\s\-]+"
+                        oninput="this.value = this.value.replace(/[^А-Яа-яЁё\s\-]/g, '')"
+                        class="w-full px-5 py-3 rounded-lg bg-gray-800 dark:bg-gray-100 text-white dark:text-gray-800 border border-gray-700 dark:border-gray-300 focus:border-purple-500 dark:focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-500 dark:focus:ring-purple-400 transition">
 
-  <!-- ЭТАПЫ РАБОТ — каждый отдельно -->
-<section id="stages" class="py-20 bg-blue text-white">
-  <div class="max-w-7xl mx-auto px-4">
-    <h2 class="text-4xl md:text-5xl font-bold text-center mb-6 uppercase tracking-wider">
-      ЭТАПЫ РАБОТ
-    </h2>
-    <p class="text-center text-gray-400 mb-16 max-w-3xl mx-auto">
-      Каждый этап фиксируем документально и по фото/видео (по желанию)
-    </p>
+                    <!-- Телефон -->
+                    <input type="tel" id="phone" name="phone" placeholder="+7 (___) ___-__-__" required
+                        inputmode="numeric" maxlength="18"
+                        pattern="\+7\s?[\(]{0,1}9[0-9]{2}[\)]{0,1}\s?\d{3}[-]{0,1}\d{2}[-]{0,1}\d{2}"
+                        oninput="phoneMask(this)"
+                        class="w-full px-5 py-3 rounded-lg bg-gray-800 dark:bg-gray-100 text-white dark:text-gray-800 border border-gray-700 dark:border-gray-300 focus:border-purple-500 dark:focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-500 dark:focus:ring-purple-400 transition">
 
-    <div class="grid md:grid-cols-3 lg:grid-cols-5 gap-8">
-      <!-- Этап 01 -->
-      <div class="text-center group">
-        <div class="w-16 h-16 bg-purple-600 text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4 
+                    <!-- Мессенджер -->
+                    <div class="mt-6 flex flex-col items-center">
+                        <p class="text-sm text-gray-400 mb-3">Связаться через</p>
+                        <div class="flex gap-8">
+                            <label class="flex items-center cursor-pointer">
+                                <input type="radio" name="messenger" value="telegram" x-model="form.messenger" required
+                                    class="sr-only peer">
+                                <div
+                                    class="w-5 h-5 border-2 border-purple-500 rounded-full peer-checked:bg-purple-600 transition">
+                                </div>
+                                <span class="ml-2">Telegram</span>
+                            </label>
+                            <label class="flex items-center cursor-pointer">
+                                <input type="radio" name="messenger" value="whatsapp" x-model="form.messenger" required
+                                    class="sr-only peer">
+                                <div
+                                    class="w-5 h-5 border-2 border-purple-500 rounded-full peer-checked:bg-purple-600 transition">
+                                </div>
+                                <span class="ml-2">WhatsApp</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="submit" id="modalSubmitBtn"
+                        class="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-3 rounded-lg font-bold hover:shadow-lg transform hover:scale-105 transition">
+                        Отправить заявку
+                    </button>
+                </form>
+
+                <button @click="showForm = false"
+                    class="mt-4 text-gray-400 dark:text-gray-600 hover:text-white dark:hover:text-gray-800 text-sm w-full">
+                    Закрыть
+                </button>
+            </div>
+        </div>
+    </section>
+    <hr class="border-t border-dark" />
+
+    <!-- Telegram-менеджера -->
+    <section class="py-20 bg-Dark_Knight text-white">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold mb-6">Telegram чат с личным менеджером</h2>
+            <p class="text-xl mb-8">Ваш верный помощник 24/7</p>
+            <a href="https://t.me/GerasimovSvoi" target="_blank"
+                class="bg-gray-800 text-purple-400 px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-100 transition">
+                Перейти в Telegram
+            </a>
+        </div>
+    </section>
+    <hr class="border-t border-dark" />
+
+    <!-- ЭТАПЫ РАБОТ — каждый отдельно -->
+    <section id="stages" class="py-20 bg-blue text-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-6 uppercase tracking-wider">
+                ЭТАПЫ РАБОТ
+            </h2>
+            <p class="text-center text-gray-400 mb-16 max-w-3xl mx-auto">
+                Каждый этап фиксируем документально и по фото/видео (по желанию)
+            </p>
+
+            <div class="grid md:grid-cols-3 lg:grid-cols-5 gap-8">
+                <!-- Этап 01 -->
+                <div class="text-center group">
+                    <div class="w-16 h-16 bg-purple-600 text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4 
                     group-hover:bg-purple-500 group-hover:scale-110 transition-all duration-300 shadow-lg">
-          01
-        </div>
-        <h3 class="text-xl font-bold mb-2">Заявка</h3>
-        <p class="text-sm text-gray-300">На сайте или в мессенджере</p>
-      </div>
+                        01
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Заявка</h3>
+                    <p class="text-sm text-gray-300">На сайте или в мессенджере</p>
+                </div>
 
-      <!-- Этап 02 -->
-      <div class="text-center group">
-        <div class="w-16 h-16 bg-purple-600 text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4 
+                <!-- Этап 02 -->
+                <div class="text-center group">
+                    <div class="w-16 h-16 bg-purple-600 text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4 
                     group-hover:bg-purple-500 group-hover:scale-110 transition-all duration-300 shadow-lg">
-          02
-        </div>
-        <h3 class="text-xl font-bold mb-2">Забор товара</h3>
-        <p class="text-sm text-gray-300">С ТЯК, Садовод, Южные ворота, вашего склада</p>
-      </div>
+                        02
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Забор товара</h3>
+                    <p class="text-sm text-gray-300">С ТЯК, Садовод, Южные ворота, вашего склада</p>
+                </div>
 
-      <!-- Этап 03 -->
-      <div class="text-center group">
-        <div class="w-16 h-16 bg-purple-600 text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4 
+                <!-- Этап 03 -->
+                <div class="text-center group">
+                    <div class="w-16 h-16 bg-purple-600 text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4 
                     group-hover:bg-purple-500 group-hover:scale-110 transition-all duration-300 shadow-lg">
-          03
-        </div>
-        <h3 class="text-xl font-bold mb-2">Приёмка</h3>
-        <p class="text-sm text-gray-300">Пересчёт, проверка на брак, акт</p>
-      </div>
+                        03
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Приёмка</h3>
+                    <p class="text-sm text-gray-300">Пересчёт, проверка на брак, акт</p>
+                </div>
 
-      <!-- Этап 04 -->
-      <div class="text-center group">
-        <div class="w-16 h-16 bg-purple-600 text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4 
+                <!-- Этап 04 -->
+                <div class="text-center group">
+                    <div class="w-16 h-16 bg-purple-600 text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4 
                     group-hover:bg-purple-500 group-hover:scale-110 transition-all duration-300 shadow-lg">
-          04
-        </div>
-        <h3 class="text-xl font-bold mb-2">Упаковка</h3>
-        <p class="text-sm text-gray-300">Фото/видео, штрих-коды, любой вид</p>
-      </div>
+                        04
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Упаковка</h3>
+                    <p class="text-sm text-gray-300">Фото/видео, штрих-коды, любой вид</p>
+                </div>
 
-      <!-- Этап 05 -->
-      <div class="text-center group">
-        <div class="w-16 h-16 bg-purple-600 text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4 
+                <!-- Этап 05 -->
+                <div class="text-center group">
+                    <div class="w-16 h-16 bg-purple-600 text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4 
                     group-hover:bg-purple-500 group-hover:scale-110 transition-all duration-300 shadow-lg">
-          05
+                        05
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Отгрузка</h3>
+                    <p class="text-sm text-gray-300">Поставка в любой город РФ</p>
+                </div>
+            </div>
         </div>
-        <h3 class="text-xl font-bold mb-2">Отгрузка</h3>
-        <p class="text-sm text-gray-300">Поставка в любой город РФ</p>
-      </div>
-    </div>
-  </div>
-</section>
-<hr class="border-t border-dark" />
+    </section>
+    <hr class="border-t border-dark" />
 
-  <!-- Цены -->
-  <section id="pricelist" class="py-20 bg-Dark_Knight text-white">
-    <div class="max-w-7xl mx-auto px-4">
-      <h2 class="text-4xl font-bold text-center mb-4">ОСНОВНЫЕ ЦЕНЫ НА УСЛУГИ</h2>
-      <p class="text-center text-pink-400 font-bold text-xl mb-12">Наши цены Вас приятно удивят!</p>
-      <div class="grid md:grid-cols-3 gap-8 mb-12">
-        <div class="bg-gradient-to-br from-purple-600 to-pink-600 text-white p-8 rounded-2xl text-center">
-          <h3 class="text-2xl font-bold mb-4">Обработка</h3>
-          <p class="text-lg">Приём, пересчёт, укладка</p>
-          <p class="text-4xl font-bold mt-4">от 3₽</p>
+    <!-- Цены -->
+    <section id="pricelist" class="py-20 bg-Dark_Knight text-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-4">ОСНОВНЫЕ ЦЕНЫ НА УСЛУГИ</h2>
+            <p class="text-center text-pink-400 font-bold text-xl mb-12">Наши цены Вас приятно удивят!</p>
+            <div class="grid md:grid-cols-3 gap-8 mb-12">
+                <div class="bg-gradient-to-br from-purple-600 to-pink-600 text-white p-8 rounded-2xl text-center">
+                    <h3 class="text-2xl font-bold mb-4">Обработка</h3>
+                    <p class="text-lg">Приём, пересчёт, укладка</p>
+                    <p class="text-4xl font-bold mt-4">от 3₽</p>
+                </div>
+                <div class="bg-gray-800 p-8 rounded-2xl text-center">
+                    <h3 class="text-2xl font-bold mb-4">Упаковка</h3>
+                    <p class="text-lg">Короб 60×40×40</p>
+                    <p class="text-4xl font-bold mt-4 text-purple-400">60₽</p>
+                </div>
+                <div class="bg-gray-800 p-8 rounded-2xl text-center">
+                    <h3 class="text-2xl font-bold mb-4">Логистика</h3>
+                    <p class="text-lg">До СЦ маркетплейса</p>
+                    <p class="text-4xl font-bold mt-4 text-purple-400">от 300₽</p>
+                </div>
+            </div>
+            <div class="bg-gray-800 p-8 border border-purple-700 rounded-2xl text-center">
+                <h3 class="text-2xl font-bold mb-4">ГИБКАЯ СИСТЕМА СКИДОК</h3>
+                <div class="flex justify-center space-x-8 text-lg">
+                    <div><strong>10%</strong> — первая отгрузка</div>
+                    <div><strong>10%</strong> — приведи друга</div>
+                    <div><strong>10%</strong> — от 1000 ед.</div>
+                </div>
+                <p class="mt-4 font-semibold text-pink-400">Все скидки суммируются!</p>
+            </div>
         </div>
-        <div class="bg-gray-800 p-8 rounded-2xl text-center">
-          <h3 class="text-2xl font-bold mb-4">Упаковка</h3>
-          <p class="text-lg">Короб 60×40×40</p>
-          <p class="text-4xl font-bold mt-4 text-purple-400">60₽</p>
+    </section>
+    <hr class="border-t border-dark" />
+
+    <!-- НАШИ ПАРТНЁРЫ — с двумя кнопками -->
+    <section id="partners" class="py-20 bg-blue text-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-4 uppercase tracking-wider">
+                ПАРТНЁРЫ
+            </h2>
+            <p class="text-center text-pink-400 text-lg mb-12 max-w-4xl mx-auto">
+                Наши партнёры проверенные временем, с ними мы разделяем общую цель — сделать всё в наилучшем виде.
+                Каждый
+                занимается тем, что у него хорошо получается.
+            </p>
+
+            <div class="bg-gray-800 p-8 md:p-12 rounded-3xl shadow-2xl max-w-5xl mx-auto">
+                <h3 class="text-2xl md:text-3xl font-bold mb-6 text-white">
+                    "Great Century Company International Logistics Limited"
+                </h3>
+                <p class="text-lg italic text-gray-300 mb-6">
+                    Официальный представитель компании «Shangtong International Logistics Ltd» в России
+                </p>
+                <p class="text-lg mb-6">
+                    Компания занимается оптовыми и розничными закупками в Китае, осуществляет доставку в Россию, страны
+                    СНГ и
+                    Европы.
+                </p>
+                <p class="text-xl font-semibold mb-6">Полный спектр услуг:</p>
+
+                <ul class="space-y-3 text-lg text-gray-200 mb-10">
+                    <li class="flex items-start"><span class="text-pink-400 mr-3">•</span> поиск товара, переговоры,
+                        выкуп,
+                        проверка товара и доставка.</li>
+                    <li class="flex items-start"><span class="text-pink-400 mr-3">•</span> Профессиональная команда,
+                        которая уже
+                        более 10 лет работает в сфере грузовых перевозок.</li>
+                    <li class="flex items-start"><span class="text-pink-400 mr-3">•</span> Поддержка дополнительных
+                        услуг для
+                        русскоязычных стран.</li>
+                    <li class="flex items-start"><span class="text-pink-400 mr-3">•</span> Высококачественная зарубежная
+                        сеть
+                        таможенного оформления.</li>
+                    <li class="flex items-start"><span class="text-pink-400 mr-3">•</span> GPS-отслеживание на
+                        протяжении всей
+                        международной перевозки.</li>
+                    <li class="flex items-start"><span class="text-pink-400 mr-3">•</span> Морские, наземные, воздушные
+                        и
+                        железнодорожные транспортные каналы.</li>
+                    <li class="flex items-start"><span class="text-pink-400 mr-3">•</span> Отличное соотношение цены и
+                        качества
+                        обслуживания.</li>
+                    <li class="flex items-start"><span class="text-pink-400 mr-3">•</span> Наличие большого списка
+                        проверенных
+                        производителей.</li>
+                    <li class="flex items-start"><span class="text-pink-400 mr-3">•</span> Индивидуальный подход и
+                        обсуждение
+                        условий работы с каждым клиентом.</li>
+                </ul>
+
+                <!-- ДВЕ КНОПКИ -->
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <!-- Кнопка 1: Telegram -->
+                    <a href="https://t.me/ВАШ_КАНАЛ" target="_blank"
+                        class="bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-8 py-3 rounded-full font-bold text-lg hover:shadow-xl transform hover:scale-105 transition flex items-center justify-center">
+                        <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 11.944 0zm4.96 6.66l-1.79 8.42c-.13.6-.48.75-.97.46l-2.73-2.01-1.32 1.27c-.15.15-.27.27-.55.27l.2-2.78 5.06-4.58c.22-.2-.05-.31-.32-.11l-6.25 3.94-2.4-.75c-.52-.16-.53-.52.11-.77l9.95-3.83c.43-.17.81.1.81.57z" />
+                        </svg>
+                        Перейти в Telegram
+                    </a>
+
+                    <!-- Кнопка 2: Сайт -->
+                    <a href="" target="_blank"
+                        class="bg-gray-700 text-white px-8 py-3 rounded-full font-bold text-lg hover:bg-gray-600 hover:shadow-xl transform hover:scale-105 transition flex items-center justify-center">
+                        <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                        </svg>
+                        Перейти на сайт
+                    </a>
+                </div>
+            </div>
         </div>
-        <div class="bg-gray-800 p-8 rounded-2xl text-center">
-          <h3 class="text-2xl font-bold mb-4">Логистика</h3>
-          <p class="text-lg">До СЦ маркетплейса</p>
-          <p class="text-4xl font-bold mt-4 text-purple-400">от 300₽</p>
+    </section>
+    <hr class="border-t border-dark" />
+
+
+    <!-- СВЯЖИТЕСЬ С НАМИ + ЯНДЕКС КАРТА -->
+    <section id="contact" class="py-20 bg-Dark_Knight text-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-12 uppercase tracking-wider">
+                СВЯЖИТЕСЬ С НАМИ
+            </h2>
+
+            <div class="grid lg:grid-cols-2 gap-12">
+                <!-- Форма -->
+                <div>
+                    <form id="contactForm"
+                        class="space-y-6 bg-gray-800 dark:bg-white p-8 rounded-2xl shadow-2xl border dark:border-gray-300">
+
+                        <!-- ИМЯ — только русские буквы -->
+                        <input type="text" id="name" name="name" placeholder="Ваше имя" required
+                            pattern="[А-Яа-яЁё\s\-]+" title="Только русские буквы, пробел и дефис"
+                            oninput="this.value = this.value.replace(/[^А-Яа-яЁё\s\-]/g, '')"
+                            class="w-full px-5 py-3 rounded-lg bg-gray-700 dark:bg-gray-100 text-white dark:text-gray-800 border border-gray-600 dark:border-gray-300 focus:border-purple-500 dark:focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-500 dark:focus:ring-purple-400 transition">
+
+                        <!-- ТЕЛЕФОН — маска +7 (___) ___-__-__ -->
+                        <input type="tel" id="phone" name="phone" placeholder="+7 (___) ___-__-__" required
+                            inputmode="numeric" maxlength="18"
+                            pattern="\+7\s?[\(]{0,1}9[0-9]{2}[\)]{0,1}\s?\d{3}[-]{0,1}\d{2}[-]{0,1}\d{2}"
+                            title="Введите номер в формате: +7 (9__) ___-__-__" oninput="phoneMask(this)"
+                            class="w-full px-5 py-3 rounded-lg bg-gray-700 dark:bg-gray-100 text-white dark:text-gray-800 border border-gray-600 dark:border-gray-300 focus:border-purple-500 dark:focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-500 dark:focus:ring-purple-400 transition mt-4">
+
+                        <!-- ВЫБОР МЕССЕНДЖЕРА -->
+                        <div class="mt-6 flex flex-col items-center">
+                            <p class="text-sm text-gray-400 mb-3">Связаться через</p>
+                            <div class="flex gap-8">
+                                <label class="flex items-center cursor-pointer">
+                                    <input type="radio" name="messenger" value="telegram" x-model="form.messenger"
+                                        required class="sr-only peer">
+                                    <div
+                                        class="w-5 h-5 border-2 border-purple-500 rounded-full peer-checked:bg-purple-600 transition">
+                                    </div>
+                                    <span class="ml-2">Telegram</span>
+                                </label>
+                                <label class="flex items-center cursor-pointer">
+                                    <input type="radio" name="messenger" value="whatsapp" x-model="form.messenger"
+                                        required class="sr-only peer">
+                                    <div
+                                        class="w-5 h-5 border-2 border-purple-500 rounded-full peer-checked:bg-purple-600 transition">
+                                    </div>
+                                    <span class="ml-2">WhatsApp</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- КНОПКА -->
+                        <button type="submit" id="submitBtn"
+                            class="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-3 rounded-lg font-bold text-lg hover:shadow-xl transform hover:scale-105 transition mt-6">
+                            Отправить заявку
+
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Яндекс.Карта -->
+                <div
+                    class="h-96 lg:h-auto rounded-2xl overflow-hidden shadow-2xl border border-purple-700 dark:border-purple-300">
+                    <iframe
+                        src="https://yandex.ru/map-widget/v1/?ll=37.867052%2C55.632047&z=16&pt=37.867052%2C55.632047&mode=poi&poi[point]=55.632047, 37.867052&poi[uri]=ymapsbm1://geo?ll=37.867052%2C55.632047&spn=0.005%2C0.005&text=%D0%A3%D0%B3%D1%80%D0%B5%D1%88%D1%81%D0%BA%D0%B0%D1%8F%20%D1%83%D0%BB%D0%B8%D1%86%D0%B0%2C%2032%2C%20%D0%94%D0%B7%D0%B5%D1%80%D0%B6%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9%2C%20%D0%B3%D0%BE%D1%80%D0%BE%D0%B4%D1%81%D0%BA%D0%BE%D0%B9%20%D0%BE%D0%BA%D1%80%D1%83%D0%B3%20%D0%9B%D1%8E%D0%B1%D0%B5%D1%80%D1%86%D1%8B%2C%20%D0%9C%D0%BE%D1%81%D0%BA%D0%BE%D0%B2%D1%81%D0%BA%D0%B0%D1%8F%20%D0%BE%D0%B1%D0%BB%D0%B0%D1%81%D1%82%D1%8C%2C%20140090"
+                        width="100%" height="100%" frameborder="0" allowfullscreen="true" style="position:relative;">
+                    </iframe>
+                </div>
+            </div>
+
+            <!-- Адрес под картой -->
+            <div class="text-center mt-8">
+                <p class="text-lg font-semibold">
+                    Улица Угрешская, 32, Дзержинский, Московская область
+                </p>
+                <p class="text-sm text-gray-400 mt-2">
+                    Работаем без выходных • +7 (495) 128-11-82
+                </p>
+            </div>
         </div>
-      </div>
-      <div class="bg-gray-800 p-8 border border-purple-700 rounded-2xl text-center">
-        <h3 class="text-2xl font-bold mb-4">ГИБКАЯ СИСТЕМА СКИДОК</h3>
-        <div class="flex justify-center space-x-8 text-lg">
-          <div><strong>10%</strong> — первая отгрузка</div>
-          <div><strong>10%</strong> — приведи друга</div>
-          <div><strong>10%</strong> — от 1000 ед.</div>
-        </div>
-        <p class="mt-4 font-semibold text-pink-400">Все скидки суммируются!</p>
-      </div>
-    </div>
-  </section>
-<hr class="border-t border-dark" />
-
-<!-- НАШИ ПАРТНЁРЫ — с двумя кнопками -->
-<section id="partners" class="py-20 bg-blue text-white">
-  <div class="max-w-7xl mx-auto px-4">
-    <h2 class="text-4xl md:text-5xl font-bold text-center mb-4 uppercase tracking-wider">
-      ПАРТНЁРЫ
-    </h2>
-    <p class="text-center text-pink-400 text-lg mb-12 max-w-4xl mx-auto">
-      Наши партнёры проверенные временем, с ними мы разделяем общую цель — сделать всё в наилучшем виде. Каждый занимается тем, что у него хорошо получается.
-    </p>
-
-    <div class="bg-gray-800 p-8 md:p-12 rounded-3xl shadow-2xl max-w-5xl mx-auto">
-      <h3 class="text-2xl md:text-3xl font-bold mb-6 text-white">
-        "Great Century Company International Logistics Limited"
-      </h3>
-      <p class="text-lg italic text-gray-300 mb-6">
-        Официальный представитель компании «Shangtong International Logistics Ltd» в России
-      </p>
-      <p class="text-lg mb-6">
-        Компания занимается оптовыми и розничными закупками в Китае, осуществляет доставку в Россию, страны СНГ и Европы.
-      </p>
-      <p class="text-xl font-semibold mb-6">Полный спектр услуг:</p>
-
-      <ul class="space-y-3 text-lg text-gray-200 mb-10">
-        <li class="flex items-start"><span class="text-pink-400 mr-3">•</span> поиск товара, переговоры, выкуп, проверка товара и доставка.</li>
-        <li class="flex items-start"><span class="text-pink-400 mr-3">•</span> Профессиональная команда, которая уже более 10 лет работает в сфере грузовых перевозок.</li>
-        <li class="flex items-start"><span class="text-pink-400 mr-3">•</span> Поддержка дополнительных услуг для русскоязычных стран.</li>
-        <li class="flex items-start"><span class="text-pink-400 mr-3">•</span> Высококачественная зарубежная сеть таможенного оформления.</li>
-        <li class="flex items-start"><span class="text-pink-400 mr-3">•</span> GPS-отслеживание на протяжении всей международной перевозки.</li>
-        <li class="flex items-start"><span class="text-pink-400 mr-3">•</span> Морские, наземные, воздушные и железнодорожные транспортные каналы.</li>
-        <li class="flex items-start"><span class="text-pink-400 mr-3">•</span> Отличное соотношение цены и качества обслуживания.</li>
-        <li class="flex items-start"><span class="text-pink-400 mr-3">•</span> Наличие большого списка проверенных производителей.</li>
-        <li class="flex items-start"><span class="text-pink-400 mr-3">•</span> Индивидуальный подход и обсуждение условий работы с каждым клиентом.</li>
-      </ul>
-
-      <!-- ДВЕ КНОПКИ -->
-      <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <!-- Кнопка 1: Telegram -->
-        <a href="https://t.me/ВАШ_КАНАЛ" target="_blank"
-           class="bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-8 py-3 rounded-full font-bold text-lg hover:shadow-xl transform hover:scale-105 transition flex items-center justify-center">
-          <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 11.944 0zm4.96 6.66l-1.79 8.42c-.13.6-.48.75-.97.46l-2.73-2.01-1.32 1.27c-.15.15-.27.27-.55.27l.2-2.78 5.06-4.58c.22-.2-.05-.31-.32-.11l-6.25 3.94-2.4-.75c-.52-.16-.53-.52.11-.77l9.95-3.83c.43-.17.81.1.81.57z"/>
-          </svg>
-          Перейти в Telegram
-        </a>
-
-        <!-- Кнопка 2: Сайт -->
-        <a href="" target="_blank"
-           class="bg-gray-700 text-white px-8 py-3 rounded-full font-bold text-lg hover:bg-gray-600 hover:shadow-xl transform hover:scale-105 transition flex items-center justify-center">
-          <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/>
-          </svg>
-          Перейти на сайт
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
-<hr class="border-t border-dark" />
-
-
-<!-- СВЯЖИТЕСЬ С НАМИ + ЯНДЕКС КАРТА -->
-<section id="contact" class="py-20 bg-Dark_Knight text-white">
-  <div class="max-w-7xl mx-auto px-4">
-    <h2 class="text-4xl md:text-5xl font-bold text-center mb-12 uppercase tracking-wider">
-      СВЯЖИТЕСЬ С НАМИ
-    </h2>
-
-    <div class="grid lg:grid-cols-2 gap-12">
-      <!-- Форма -->
-      <div>
-        <form action="https://formspree.io/f/ВАШ_ID" method="POST" class="space-y only-y-6 bg-gray-800 p-8 rounded-2xl shadow-2xl">
-          <input type="text" name="name" placeholder="Ваше имя" required
-                 class="w-full px-5 py-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500 transition">
-          <input type="tel" name="phone" placeholder="Телефон" required
-                 class="w-full px-5 py-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500 transition mt-4">
-          <input type="email" name="email" placeholder="Выбор" required
-                 class="w-full px-5 py-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500 transition mt-4">
-          <button type="submit"
-                  class="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-3 rounded-lg font-bold text-lg hover:shadow-xl transform hover:scale-105 transition mt-6">
-            Отправить заявку
-          </button>
-        </form>
-      </div>
-
-      <!-- Яндекс.Карта -->
-      <div class="h-96 lg:h-auto rounded-2xl overflow-hidden shadow-2xl border border-purple-700">
-        <iframe
-          src="https://yandex.ru/map-widget/v1/?ll=37.898383%2C55.677383&z=16&pt=37.898383%2C55.677383~&mode=poi&poi[point]=37.898383,55.677383&poi[uri]=ymapsbm1://geo?ll=37.898%2C55.677&spn=0.005%2C0.005&text=%D0%9C%D0%BE%D1%81%D0%BA%D0%BE%D0%B2%D1%81%D0%BA%D0%B0%D1%8F%20%D0%BE%D0%B1%D0%BB%D0%B0%D1%81%D1%82%D1%8C%2C%20%D0%B3.%20%D0%9B%D1%8E%D0%B1%D0%B5%D1%80%D1%86%D1%8B%2C%20%D1%83%D0%BB.%20%D0%92%D0%BE%D0%BB%D0%BA%D0%BE%D0%B2%D1%81%D0%BA%D0%B0%D1%8F%2C%20%D0%B4.70"
-          width="100%" height="100%" frameborder="0" allowfullscreen="true"
-          style="position:relative;">
-        </iframe>
-      </div>
-    </div>
-
-    <!-- Адрес под картой -->
-    <div class="text-center mt-8">
-      <p class="text-lg font-semibold">
-        Московская область, г. Люберцы, ул. Волковская, д. 70
-      </p>
-      <p class="text-sm text-gray-400 mt-2">
-        Работаем без выходных • 8 (800) 444-29-36
-      </p>
-    </div>
-  </div>
-</section>
-<hr class="border-t border-dark" />
+    </section>
+    <hr class="border-t border-dark" />
 
     <!-- Отзывы -->
-  <section id="reviews" class="py-20 bg-blue text-white">
-    <div class="max-w-7xl mx-auto px-4">
-      <h2 class="text-4xl font-bold text-center mb-12">ОТЗЫВЫ</h2>
-      <div class="grid md:grid-cols-2 gap-8">
-        <div class="bg-gray-800 p-6 text-white rounded-xl">
-          <p class="italic mb-4">"Весь товар приняли на 100% на 2-й день! Вы с Русланом — фартовые!"</p>
-          <p class="font-bold">— Игорь</p>
+    <section id="reviews" class="py-20 bg-blue text-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-12">ОТЗЫВЫ</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-gray-800 p-6 text-white rounded-xl">
+                    <p class="italic mb-4">"Весь товар приняли на 100% на 2-й день! Вы с Русланом — фартовые!"</p>
+                    <p class="font-bold">— Игорь</p>
+                </div>
+                <div class="bg-gray-800 p-6 text-white rounded-xl">
+                    <p class="italic mb-4">"Утром бот показывает продажу вчерашнюю, на остатках 300 шт. Вот это
+                        скорость!"</p>
+                    <p class="font-bold">— Илья</p>
+                </div>
+                <div class="bg-gray-800 p-6 text-white rounded-xl">
+                    <p class="italic mb-4">"Вы прекрасно упаковали, ничего не поменялось. Скотч держится!"</p>
+                    <p class="font-bold">— Татьяна</p>
+                </div>
+                <div class="bg-gray-800 p-6 text-white rounded-xl">
+                    <p class="italic mb-4">"Помогаете даже с оформлением поставки. Вы крутые!"</p>
+                    <p class="font-bold">— Снежана</p>
+                </div>
+            </div>
         </div>
-        <div class="bg-gray-800 p-6 text-white rounded-xl">
-          <p class="italic mb-4">"Утром бот показывает продажу вчерашнюю, на остатках 300 шт. Вот это скорость!"</p>
-          <p class="font-bold">— Илья</p>
-        </div>
-        <div class="bg-gray-800 p-6 text-white rounded-xl">
-          <p class="italic mb-4">"Вы прекрасно упаковали, ничего не поменялось. Скотч держится!"</p>
-          <p class="font-bold">— Татьяна</p>
-        </div>
-        <div class="bg-gray-800 p-6 text-white rounded-xl">
-          <p class="italic mb-4">"Помогаете даже с оформлением поставки. Вы крутые!"</p>
-          <p class="font-bold">— Снежана</p>
-        </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Футер -->
-  <footer class="bg-gray-900 text-white py-8 border-t border-dark">
-    <div class="max-w-7xl mx-auto px-4 text-center">
-      <p>© 2025 Фулфилмент "Для Своих". Все права защищены.</p>
-      <p class="mt-2 text-sm">
-        <a href="#privacy" class="underline hover:text-yellow-300">Политика конфиденциальности</a>
-      </p>
-    </div>
-  </footer>
+    <!-- Футер -->
+    <footer class="bg-gray-900 text-white py-8 border-t border-dark">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p>© 2025 Фулфилмент "Для Своих". Все права защищены.</p>
+            <p class="mt-2 text-sm">
+                <!-- МОДАЛЬНОЕ ОКНО ПОЛИТИКИ — ИСПРАВЛЕНО -->
+            <div x-data="{ showPrivacy: false }">
+                <!-- Модальное окно -->
+                <div x-show="showPrivacy" x-transition @keydown.escape.window="showPrivacy = false"
+                    class="fixed inset-0 bg-black bg-opacity-70 z-50 flex items-center justify-center p-4"
+                    style="display: none;">
 
-  <!-- Модальное окно с политикой (по клику) -->
-  <div x-data="{ showPrivacy: false }" @keydown.escape="showPrivacy = false">
-    <div x-show="showPrivacy" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4" style="display: none;">
-      <div @click.away="showPrivacy = false" class="bg-gray-900 rounded-xl border border-gray-700 max-w-4xl max-h-screen overflow-y-auto p-8">
-        <h3 class="text-2xl font-bold mb-6">Политика обработки персональных данных</h3>
-        <p class="text-sm text-gray-300 leading-relaxed">[Вставьте текст политики из документа]</p>
-        <button @click="showPrivacy = false" class="mt-6 bg-purple-600 text-white hover:bg-purple-500 px-6 py-2 rounded-lg">Закрыть</button>
-      </div>
-    </div>
-    <button @click="showPrivacy = true" id="privacy" style="display:none;"></button>
-  </div>
+                    <div @click.away="showPrivacy = false"
+                        class="bg-gray-900 dark:bg-white rounded-xl border dark:border-gray-300 max-w-4xl max-h-screen overflow-y-auto p-8 shadow-2xl">
+                        <h3 class="text-2xl font-bold mb-6 text-purple-400 dark:text-purple-600">Политика обработки
+                            персональных
+                            данных</h3>
+                        <p class="text-sm text-gray-300 dark:text-gray-700 leading-relaxed">
+                            [текст политики из документа]
+                        </p>
+                        <button @click="showPrivacy = false"
+                            class="mt-6 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 py-2 rounded-lg font-bold hover:shadow-lg transition">
+                            Закрыть
+                        </button>
+                    </div>
+                </div>
 
-  <script>
-    // Автопрокрутка к #pricelist при загрузке, если в URL
-    if (window.location.hash === '#pricelist') {
-      setTimeout(() => {
-        document.querySelector('#pricelist').scrollIntoView({ behavior: 'smooth' });
-      }, 500);
-    }
-  </script>
+                <!-- Кнопка-триггер (в футере) -->
+                <a href="#" @click.prevent="showPrivacy = true"
+                    class="underline hover:text-yellow-300 dark:hover:text-yellow-400">
+                    Политика конфиденциальности
+                </a>
+            </div>
+            </p>
+        </div>
+    </footer>
+
+    <!-- КАСТОМНЫЙ TOAST -->
+    <div id="toast"
+        class="fixed bottom-8 left-1/2 -translate-x-1/2 px-8 py-4 rounded-2xl shadow-2xl text-white font-medium text-base flex items-center gap-3 opacity-0 transition-all duration-300 pointer-events-none z-50">
+        <svg id="toastIcon" class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"></svg>
+        <span id="toastMessage"></span>
+    </div>
+
+    <script>
+        // Маска телефона
+        function phoneMask(input) {
+            let v = input.value.replace(/\D/g, '');
+            if (v.length > 11) v = v.slice(0, 11);
+            if (v && !v.startsWith('7')) v = '7' + v.slice(1);
+            let f = '+7';
+            if (v.length > 1) f += ' (' + v.substring(1, 4);
+            if (v.length >= 4) f += ') ' + v.substring(4, 7);
+            if (v.length >= 7) f += '-' + v.substring(7, 9);
+            if (v.length >= 9) f += '-' + v.substring(9, 11);
+            input.value = f;
+        }
+
+        // TOAST НА TAILWIND
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const msg = document.getElementById('toastMessage');
+            const icon = document.getElementById('toastIcon');
+
+            // Текст
+            msg.textContent = message;
+
+            // Стиль по типу
+            if (type === 'success') {
+                toast.className = 'fixed bottom-8 left-1/2 -translate-x-1/2 px-8 py-4 rounded-2xl shadow-2xl text-white font-medium text-base flex items-center gap-3 opacity-100 pointer-events-auto z-50 bg-emerald-600 border-l-6 border-emerald-400';
+                icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>';
+            } else {
+                toast.className = 'fixed bottom-8 left-1/2 -translate-x-1/2 px-8 py-4 rounded-2xl shadow-2xl text-white font-medium text-base flex items-center gap-3 opacity-100 pointer-events-auto z-50 bg-red-600 border-l-6 border-red-400';
+                icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/>';
+            }
+
+            // Показать
+            toast.classList.remove('opacity-0');
+            toast.classList.add('opacity-100');
+
+            // Скрыть через 3 сек
+            setTimeout(() => {
+                toast.classList.remove('opacity-100');
+                toast.classList.add('opacity-0');
+            }, 5000);
+        }
+
+        // Отправка через fetch
+        document.addEventListener('DOMContentLoaded', function () {
+            const forms = [
+                { id: 'contactForm', btnId: 'submitBtn', addSource: false },
+                { id: 'modalForm', btnId: 'modalSubmitBtn', addSource: true }
+            ];
+
+            forms.forEach(({ id, btnId, addSource }) => {
+                const form = document.getElementById(id);
+                if (!form) return;
+
+                form.addEventListener('submit', async function (e) {
+                    e.preventDefault();
+
+                    // ПРОВЕРКА ТЕЛЕФОНА
+                    const phoneInput = form.querySelector('input[name="phone"]');
+                    const phoneValue = phoneInput.value.replace(/\D/g, ''); // только цифры
+
+                    if (phoneValue.length !== 11) {
+                        showToast('Введите полный номер телефона!', 'error');
+                        phoneInput.focus();
+                        return; // БЛОКИРУЕМ ОТПРАВКУ
+                    }
+                    // После проверки
+                    if (phoneValue.length !== 11) {
+                        showToast('Введите полный номер телефона!', 'error');
+                        phoneInput.classList.add('border-red-500', 'ring-2', 'ring-red-500');
+                        phoneInput.focus();
+
+                        // Убираем подсветку при вводе
+                        phoneInput.addEventListener('input', () => {
+                            phoneInput.classList.remove('border-red-500', 'ring-2', 'ring-red-500');
+                        }, { once: true });
+
+                        return;
+                    }
+                    const btn = document.getElementById(btnId);
+                    const originalText = btn.innerHTML;
+                    btn.innerHTML = 'Отправляем...';
+                    btn.disabled = true;
+
+                    const formData = new FormData(form);
+                    if (addSource) {
+                        formData.append('source', '1');
+                    }
+                    try {
+                        const response = await fetch('send.php', {
+                            method: 'POST',
+                            body: formData
+                        });
+
+                        const data = await response.json();
+
+                        if (data.ok) {
+                            showToast('Заявка отправлена! Скоро свяжемся.', 'success');
+                            form.reset();
+                            if (addSource) {
+                                // Закрыть модалку (если используешь Alpine)
+                                const alpineEl = document.querySelector('[x-data]');
+                                if (alpineEl && alpineEl.__x) {
+                                    alpineEl.__x.$data.showForm = false;
+                                }
+                            }
+                        } else {
+                            showToast('Ошибка: ' + (data.error || 'Попробуйте позже'), 'error');
+                        }
+                    } catch (error) {
+                        console.error('Fetch error:', error);
+                        showToast('Нет связи с сервером', 'error');
+                    } finally {
+                        btn.innerHTML = originalText;
+                        btn.disabled = false;
+                    }
+                });
+            });
+        });
+    </script>
+
+
 </body>
+
 </html>
